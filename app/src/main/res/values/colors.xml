@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="lightwhite">#ccc</color>
+    <color name="lightblue">#623bff</color>
+    <color name="gray">#292929</color>
+    <color name="orange">#b55a05</color>
+    <color name="buttonsBackground">#080808</color>
+    <color name="likesky">#D1C6EF</color>
+</resources>
