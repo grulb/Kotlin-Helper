@@ -3,6 +3,7 @@ package com.example.kotlincalculator
 import android.content.Intent
 import android.os.Bundle
 import android.provider.CalendarContract.Colors
+import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         }
         numbersTouch()
         windowSwitch()
-        themeSwitch()
     }
 
     private fun numbersTouch(){
@@ -157,29 +157,6 @@ class MainActivity : AppCompatActivity() {
         binding.AILightIcon.setOnClickListener{
             val intent = Intent(this, NeuroActivity::class.java)
             startActivity(intent)
-        }
-    }
-
-    private fun themeSwitch(){
-        binding.themeSwitchLight.setOnClickListener{
-            binding.themeSwitchLight.isVisible = false
-            binding.notebookLight.isVisible = false
-            binding.AILightIcon.isVisible = false
-
-            binding.themeSwitchDark.isVisible = true
-            binding.notebookDark.isVisible = true
-            binding.AIDarkIcon.isVisible = true
-        }
-
-        binding.themeSwitchDark.setOnClickListener{
-            binding.themeSwitchDark.isVisible = false
-            binding.notebookDark.isVisible = false
-            binding.AIDarkIcon.isVisible = false
-
-            binding.themeSwitchLight.isVisible = true
-            binding.notebookLight.isVisible = true
-            binding.AILightIcon.isVisible = true
-
         }
     }
 }

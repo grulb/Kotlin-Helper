@@ -1,23 +1,20 @@
 package com.example.kotlincalculator
 
-import android.content.Context
-import android.content.Intent
+import DataClasses.Notes
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.widget.addTextChangedListener
 import com.example.kotlincalculator.databinding.ActivityEditNoteBinding
-import com.example.kotlincalculator.databinding.ActivityNoteBinding
 
-class noteActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityNoteBinding.inflate(layoutInflater) }
+class EditNoteActivity : AppCompatActivity() {
+    private val binding by lazy { ActivityEditNoteBinding.inflate(layoutInflater) }
     private lateinit var db: DBHelper
-    private lateinit var notesAdapter : NotesAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,18 +25,8 @@ class noteActivity : AppCompatActivity() {
             insets
         }
         db = DBHelper(this)
-        notesAdapter = NotesAdapter(db.getAllNotes(), this)
-
-        binding.notesRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.notesRecyclerView.adapter = notesAdapter
-
-        newNote()
+        editNote()
         goBack()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        notesAdapter.refreshData(db.getAllNotes())
     }
 
     private fun goBack(){
@@ -48,10 +35,21 @@ class noteActivity : AppCompatActivity() {
         }
     }
 
-    private fun newNote(){
-        binding.buttonNewNote.setOnClickListener {
-            val intent = Intent(this, EditNoteActivity::class.java)
-            startActivity(intent)
+    private fun editNote(){
+        binding.noteEditName.addTextChangedListener{text ->
+            binding.applyNote.isVisible = !text.isNullOrEmpty()
+        }
+
+        binding.noteEditDescription.addTextChangedListener{text ->
+            binding.applyNote.isVisible = !text.isNullOrEmpty()
+        }
+
+        binding.applyNote.setOnClickListener {
+            val noteTitle = binding.noteEditName.text.toString()
+            val noteDesc = binding.noteEditDescription.text.toString()
+            val note = Notes(0, noteTitle, noteDesc)
+            db.createNote(note)
+            finish()
         }
     }
 }
