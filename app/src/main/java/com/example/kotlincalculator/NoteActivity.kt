@@ -1,19 +1,16 @@
 package com.example.kotlincalculator
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlincalculator.databinding.ActivityEditNoteBinding
 import com.example.kotlincalculator.databinding.ActivityNoteBinding
 
-class noteActivity : AppCompatActivity() {
+class NoteActivity : AppCompatActivity() {
     private val binding by lazy { ActivityNoteBinding.inflate(layoutInflater) }
     private lateinit var db: DBHelper
     private lateinit var notesAdapter : NotesAdapter
@@ -35,6 +32,7 @@ class noteActivity : AppCompatActivity() {
 
         newNote()
         goBack()
+        setLongPress()
     }
 
     override fun onResume() {
@@ -52,6 +50,22 @@ class noteActivity : AppCompatActivity() {
         binding.buttonNewNote.setOnClickListener {
             val intent = Intent(this, EditNoteActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun setLongPress(){
+        notesAdapter.onItemLongClicked = { position ->
+            binding.editNoteButton.visibility = View.VISIBLE
+            binding.deleteNoteButton.visibility = View.VISIBLE
+            binding.buttonBack.visibility = View.INVISIBLE
+            binding.buttonCancel.visibility = View.VISIBLE
+        }
+
+        binding.buttonCancel.setOnClickListener {
+            binding.editNoteButton.visibility = View.INVISIBLE
+            binding.deleteNoteButton.visibility = View.INVISIBLE
+            binding.buttonBack.visibility = View.VISIBLE
+            binding.buttonCancel.visibility = View.INVISIBLE
         }
     }
 }

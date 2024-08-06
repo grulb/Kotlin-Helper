@@ -12,10 +12,22 @@ import com.example.kotlincalculator.databinding.NoteItemBinding
 
 class NotesAdapter(private var notes : List<Notes>, context : Context) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
+    var onItemLongClicked: ((Int) -> Unit)? = null
+
     inner class NotesViewHolder(private val binding : NoteItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(note: Notes) {
             binding.noteTitle.text = note.noteName
             binding.noteDescription.text = note.noteDescription
+        }
+
+        init {
+            itemView.setOnLongClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemLongClicked?.invoke(position)
+                }
+                true
+            }
         }
     }
 

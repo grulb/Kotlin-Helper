@@ -21,7 +21,7 @@
             android:name=".NeuroActivity"
             android:exported="false" />
         <activity
-            android:name=".noteActivity"
+            android:name=".NoteActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
         <activity
